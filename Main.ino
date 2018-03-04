@@ -8,8 +8,8 @@
 Adafruit_ssd1306syp display(SDA_PIN, SCL_PIN);
 
 //WIFI
-char ssid[] = "Artrix";  // WiFi名 SSID (name)
-char pass[] = "23336666";       // WiFi密码
+char ssid[] = "........";  // Replace with your own WIFI-SSID
+char pass[] = "........";  // Replace with your own WiFi Password
 
 void initOLED() {
 
@@ -36,12 +36,14 @@ void connectWIFI() {
   display.println(ssid);
   WiFi.begin(ssid, pass);
   display.update();
+  
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
     display.print(".");
     display.update();
   }
+  
   Serial.println("");
   display.println("");
   Serial.println("WiFi connected");
@@ -68,8 +70,7 @@ const char* host = "www.zhihu.com";
 String url = "/people/a2010115/activities";
 int port = 443;
 
-// Use web browser to view and copy
-// SHA1 fingerprint of the certificate
+//www.zhihu.com Security fingerprint
 const char* fingerprint = "8D 76 F2 1B 4A F4 66 F3 10 64 7C 10 8F 03 88 FB 68 ED BC 56";
 
 void loop() {
@@ -92,10 +93,10 @@ void loop() {
 
   String postRequest = String("GET ") + url + " HTTP/1.1\r\n" +
                        "Host: " + host + "\r\n" +
-                       "User-Agent: BuildFailureDetectorESP8266\r\n" +
+                       "User-Agent: ArtrixESP8266\r\n" +
                        "Connection: close\r\n\r\n";
   Serial.println(postRequest);
-  client.print(postRequest);  // 发送HTTP请求
+  client.print(postRequest);  // Send httpsRequest
 
   //-------------Initialize---------
 
@@ -224,12 +225,6 @@ void loop() {
 
   display.update();
 
-
-  /*
-    while (client.available()) {
-     for (int i = 0; i < 30; i++)Serial.print(client.read());
-     Serial.println("  ");
-    } */
   client.stop();
   delay(3000);
 }
